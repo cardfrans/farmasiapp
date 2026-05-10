@@ -1,12 +1,14 @@
 <!-- Sidebar Navigation - Clean Version -->
 <nav class="fixed inset-y-0 left-0 w-64 bg-white border-r border-gray-100 flex flex-col z-50">
     <!-- Logo Area -->
-    <div class="h-20 flex items-center px-8 border-b border-gray-50">
-        <a href="/katalog" class="font-bold text-2xl tracking-tight text-gray-900 flex items-center gap-3">
-            <div class="w-8 h-8 bg-blue-600 rounded-lg flex items-center justify-center text-white text-sm shadow-md">💊</div>
-            ApotekKita
-        </a>
-    </div>
+     <div class="h-20 flex items-center px-8 border-b border-slate-50">
+            <a href="#" class="font-extrabold text-xl tracking-tight text-slate-900 flex items-center gap-3">
+                <div class="w-8 h-8 bg-blue-600 rounded-lg flex items-center justify-center text-white text-sm shadow-lg shadow-blue-200">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 002-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10"></path></svg>
+                </div>
+                FarmasiApp
+            </a>
+        </div>
 
     <!-- Menu Links -->
     <div class="flex-1 px-4 py-8 space-y-1.5 overflow-y-auto">

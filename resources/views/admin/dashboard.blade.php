@@ -141,7 +141,7 @@
                                     @forelse($pesananTerbaru as $trx)
                                     <tr class="hover:bg-slate-50/50 transition-colors group">
                                         <td class="py-4 font-bold text-slate-900 text-sm">#TRX-{{ str_pad($trx->id, 5, '0', STR_PAD_LEFT) }}</td>
-                                        <td class="py-4 font-semibold text-slate-600 text-sm">User ID: {{ $trx->user_id }}</td>
+                                        <td class="py-4 font-semibold text-slate-600 text-sm">User ID: {{ $trx->user_name }}</td>
                                         <td class="py-4 font-black text-slate-900 text-sm">Rp {{ number_format($trx->total_harga, 0, ',', '.') }}</td>
                                         <td class="py-4">
                                             @php
