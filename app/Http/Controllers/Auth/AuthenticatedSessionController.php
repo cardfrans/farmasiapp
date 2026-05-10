@@ -25,11 +25,21 @@ class AuthenticatedSessionController extends Controller
      */
     public function store(LoginRequest $request): RedirectResponse
     {
+        // 1. Validasi kredensial (Email & Password)
         $request->authenticate();
 
+        // 2. Regenerasi session untuk keamanan
         $request->session()->regenerate();
 
-        return redirect()->intended(RouteServiceProvider::HOME);
+        // 3. LOGIKA REDIRECT BERDASARKAN ROLE
+        // Asumsi: Anda memiliki kolom 'role' di tabel 'users' Anda
+        if ($request->user()->role === 'admin') {
+            // Jika Admin, arahkan ke Dashboard Admin
+            return redirect()->intended('/admin/dashboard');
+        }
+
+        // Jika User Biasa (Pembeli), arahkan ke halaman utama (welcome.blade.php)
+        return redirect()->intended('/');
     }
 
     /**

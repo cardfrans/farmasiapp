@@ -77,17 +77,21 @@
             </div>
             
             <div class="flex-1 w-full max-w-lg lg:max-w-none">
-                <div class="bg-white p-8 rounded-[3rem] shadow-2xl shadow-slate-200/50 border border-slate-100 relative">
-                    <div class="absolute -top-6 -left-6 bg-emerald-500 text-white p-4 rounded-2xl shadow-lg transform -rotate-6">
+                <div class="bg-white p-6 sm:p-8 rounded-[3rem] shadow-2xl shadow-slate-200/50 border border-slate-100 relative">
+                    <div class="absolute -top-6 -left-6 bg-emerald-500 text-white p-4 rounded-2xl shadow-lg transform -rotate-6 z-20">
                         <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
                     </div>
-                    <div class="aspect-[4/3] bg-slate-50 rounded-[2rem] border border-slate-100 flex items-center justify-center overflow-hidden">
-                        <div class="text-center p-6">
-                            <div class="w-20 h-20 bg-blue-100 rounded-full flex items-center justify-center mx-auto mb-4">
-                                <svg class="w-10 h-10 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z"></path></svg>
-                            </div>
-                            <h3 class="text-xl font-bold text-slate-800">UI Katalog Modern</h3>
-                            <p class="text-sm text-slate-400 mt-2">Belanja obat kini semudah belanja online biasa.</p>
+                    
+                    <div class="aspect-[4/3] bg-slate-50 rounded-[2rem] border border-slate-100 flex items-center justify-center overflow-hidden relative group">
+                        <img src="https://images.unsplash.com/photo-1559839734-2b71ea197ec2?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" 
+                             alt="Dokter FarmasiApp" 
+                             class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105">
+                        
+                        <div class="absolute inset-0 bg-gradient-to-t from-slate-900/60 via-slate-900/10 to-transparent"></div>
+                        
+                        <div class="absolute bottom-6 left-6 right-6 text-white z-10 text-left">
+                            <h3 class="text-xl font-bold shadow-sm">Layanan Terpercaya</h3>
+                            <p class="text-sm text-slate-200 mt-1 font-medium">Apoteker & Dokter Resmi</p>
                         </div>
                     </div>
                 </div>
