@@ -32,12 +32,24 @@
             Pesanan Saya
         </a>
 
+        <!-- Menu Cek Ongkir -->
         <a href="/cek-ongkir" class="flex items-center gap-3 px-4 py-3 rounded-xl font-semibold transition-all duration-200 {{ request()->is('cek-ongkir*') ? 'bg-blue-50 text-blue-700' : 'text-gray-500 hover:bg-gray-50 hover:text-gray-900'  }}">
             <svg class="w-5 h-5 {{ request()->is('cek-ongkir*') ? 'text-blue-600' : 'text-gray-400' }}" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
             </svg>
             <span class="font-bold text-sm">Cek Ongkir</span>
         </a>
+
+        <!-- Menu Riwayat Resep -->
+        <a href="{{ route('resep.index') }}" class="flex items-center gap-3 px-4 py-3 rounded-xl font-semibold transition-all duration-200 {{ request()->routeIs('resep.index') ? 'bg-blue-50 text-blue-700' : 'text-gray-500 hover:bg-gray-50 hover:text-gray-900' }}">
+        <svg class="w-5 h-5 {{ request()->routeIs('resep.index') ? 'text-blue-600' : 'text-gray-400' }}" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path>
+        </svg>
+        <span class="font-bold text-sm">Riwayat Resep</span>
+        </a>
+        
+
+
     </div>
 
     <!-- Logout Section -->

@@ -33,7 +33,13 @@ Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
-});
+    // Route untuk memproses upload resep dari Modal
+    Route::post('/upload-resep', [App\Http\Controllers\PrescriptionController::class, 'store'])->name('resep.store');
+    // Rute Kelola Resep User
+    Route::get('/riwayat-resep', [App\Http\Controllers\PrescriptionController::class, 'index'])->name('resep.index');
+    Route::delete('/hapus-resep/{id}', [App\Http\Controllers\PrescriptionController::class, 'destroy'])->name('resep.destroy');
+
+    });
 
 require __DIR__.'/auth.php';
 
@@ -58,6 +64,10 @@ Route::get('/pesanan', [App\Http\Controllers\TransactionController::class, 'inde
 
 // Rute Khusus Admin (Dilindungi)
 Route::middleware(['auth', IsAdmin::class])->group(function () {
+    // Manajemen Resep untuk Admin
+    Route::get('/admin/resep', [App\Http\Controllers\AdminPrescriptionController::class, 'index'])->name('admin.resep.index');
+    Route::put('/admin/resep/{id}', [App\Http\Controllers\AdminPrescriptionController::class, 'update'])->name('admin.resep.update');
+
     // Dashboard Admin Dinamis
     Route::get('/admin/dashboard', function () {
         // 1. Total Pendapatan (Status Lunas, Diproses, Selesai)
@@ -80,6 +90,7 @@ Route::middleware(['auth', IsAdmin::class])->group(function () {
             'totalPendapatan', 'pesananBaru', 'totalObat', 
             'stokMenipisCount', 'stokMenipis', 'pesananTerbaru'
         ));
+        
     })->name('dashboard');
 
     Route::get('/admin/obat', [App\Http\Controllers\AdminMedicineController::class, 'index']);
@@ -89,6 +100,12 @@ Route::middleware(['auth', IsAdmin::class])->group(function () {
     // Kelola Pesanan
     Route::get('/admin/pesanan', [App\Http\Controllers\AdminTransactionController::class, 'index']);
     Route::put('/admin/pesanan/{id}', [App\Http\Controllers\AdminTransactionController::class, 'update']);
+
+    // Manajemen Resep untuk Admin
+    Route::get('/admin/resep', [App\Http\Controllers\AdminPrescriptionController::class, 'index'])->name('admin.resep.index');
+    Route::put('/admin/resep/{id}', [App\Http\Controllers\AdminPrescriptionController::class, 'update'])->name('admin.resep.update');
+
+    
     
     });
 // Halaman untuk menampilkan form
@@ -98,3 +115,4 @@ Route::get('/cek-ongkir', [ShippingController::class, 'index']);
 Route::post('/cek-ongkir', [ShippingController::class, 'check']);
 Route::get('/api/search-area', [App\Http\Controllers\ShippingController::class, 'search']);
 });
+

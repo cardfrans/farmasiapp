@@ -7,13 +7,11 @@ use Illuminate\Database\Eloquent\Model;
 class Prescription extends Model
 {
     protected $primaryKey = 'prescription_id';
-    protected $guarded = [];
+    
+    // BARIS INI SANGAT PENTING. Jangan sampai terhapus atau typo.
+    protected $guarded = []; 
 
     public function user() {
-        return $this->belongsTo(User::class, 'user_id', 'user_id');
-    }
-
-    public function admin() {
-        return $this->belongsTo(Admin::class, 'verified_by', 'admin_id');
+        return $this->belongsTo(User::class, 'user_id', 'id');
     }
 }

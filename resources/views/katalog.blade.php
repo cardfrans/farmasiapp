@@ -14,16 +14,43 @@
 
     <main class="md:pl-64 min-h-screen flex flex-col relative">
         
-        <header class="h-20 bg-white/80 backdrop-blur-xl sticky top-0 z-40 border-b border-gray-200 px-6 sm:px-10 flex items-center justify-between shadow-sm">
+        <header class="h-20 bg-white/80 backdrop-blur-xl sticky top-0 z-40 border-b border-gray-200 px-6 sm:px-10 flex items-center justify-between shadow-sm gap-4">
             <h1 class="text-xl font-extrabold text-gray-900 hidden sm:block">Belanja Obat</h1>
             
-            <form action="" method="GET" class="w-full sm:w-96 relative">
-                <div class="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
-                    <svg class="w-5 h-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path></svg>
-                </div>
-                <input type="text" name="search" value="{{ request('search') }}" placeholder="Cari paracetamol, vitamin..." class="w-full pl-11 pr-4 py-2.5 border-none rounded-full bg-gray-100 focus:bg-white focus:ring-2 focus:ring-blue-500 transition-all text-sm font-medium text-gray-700 placeholder-gray-400">
-            </form>
+            <div class="flex items-center gap-3 w-full sm:w-auto justify-end">
+                <form action="" method="GET" class="w-full sm:w-96 relative">
+                    <div class="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
+                        <svg class="w-5 h-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path></svg>
+                    </div>
+                    <input type="text" name="search" value="{{ request('search') }}" placeholder="Cari paracetamol, vitamin..." class="w-full pl-11 pr-4 py-2.5 border-none rounded-full bg-gray-100 focus:bg-white focus:ring-2 focus:ring-blue-500 transition-all text-sm font-medium text-gray-700 placeholder-gray-400">
+                </form>
+
+                <button type="button" onclick="openResepModal()" class="shrink-0 flex items-center gap-2 bg-blue-50 hover:bg-blue-100 text-blue-700 px-4 py-2.5 rounded-full font-bold text-sm transition-colors border border-blue-100 shadow-sm">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path></svg>
+                    <span class="hidden sm:inline">Upload Resep</span>
+                </button>
+            </div>
         </header>
+
+        @if(session('success'))
+            <div class="mx-6 sm:mx-10 mt-6 bg-emerald-50 border border-emerald-200 text-emerald-800 px-4 py-3 rounded-xl flex items-center gap-3 shadow-sm">
+                <svg class="w-5 h-5 text-emerald-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
+                <p class="text-sm font-bold">{{ session('success') }}</p>
+            </div>
+        @endif
+
+        @if($errors->any())
+            <div class="mx-6 sm:mx-10 mt-6 bg-red-50 border border-red-200 text-red-800 px-4 py-3 rounded-xl flex items-start gap-3 shadow-sm">
+                <svg class="w-5 h-5 text-red-600 mt-0.5 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                <div class="text-sm font-medium">
+                    <ul class="list-disc list-inside">
+                        @foreach($errors->all() as $error)
+                            <li>{{ $error }}</li>
+                        @endforeach
+                    </ul>
+                </div>
+            </div>
+        @endif
 
         <div class="p-6 sm:p-10 flex-1">
             <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 sm:gap-8">
@@ -88,7 +115,6 @@
                     {{ $medicines->withQueryString()->links() }}
                 @endif
             </div>
-
         </div>
     </main>
 
@@ -121,21 +147,68 @@
                     </button>
                 </div>
             </form>
+        </div>
+    </div>
 
+    <div id="uploadResepModal" class="fixed inset-0 z-[60] flex items-center justify-center hidden">
+        <div class="modal-backdrop absolute inset-0 bg-gray-900/40 backdrop-blur-sm opacity-0 transition-opacity duration-300" onclick="closeResepModal()"></div>
+        
+        <div class="modal-content relative bg-white w-full max-w-md rounded-[2rem] shadow-2xl p-8 m-4 transform scale-95 opacity-0 transition-all duration-300">
+            
+            <div class="w-16 h-16 bg-blue-50 text-blue-600 rounded-full flex items-center justify-center mx-auto mb-4 shadow-inner">
+                <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path></svg>
+            </div>
+            
+            <h3 class="text-xl font-extrabold text-gray-900 mb-2 text-center">Upload Resep Dokter</h3>
+            <p class="text-gray-500 text-sm mb-6 leading-relaxed text-center">
+                Unggah resep Anda di sini. Apoteker kami akan meninjau dan menyiapkannya ke dalam keranjang Anda.
+            </p>
+            
+            <form action="{{ route('resep.store') }}" method="POST" enctype="multipart/form-data" class="space-y-4 m-0 text-left">
+                @csrf
+                
+                <div>
+                    <label class="block text-sm font-bold text-gray-700 mb-1.5 ml-1">Pilih File (JPG, PNG, PDF)</label>
+                    <div class="relative">
+                        <input type="file" name="resep_file" id="resep_file" accept=".jpg,.jpeg,.png,.pdf" required
+                            class="block w-full text-sm text-gray-500 
+                            file:mr-4 file:py-3 file:px-4 file:rounded-xl 
+                            file:border-0 file:text-sm file:font-bold 
+                            file:bg-blue-50 file:text-blue-700 
+                            hover:file:bg-blue-100 transition-all 
+                            border border-gray-200 rounded-xl bg-gray-50/50 cursor-pointer">
+                    </div>
+                </div>
+
+                <div>
+                    <label for="catatan" class="block text-sm font-bold text-gray-700 mb-1.5 ml-1">Catatan Tambahan</label>
+                    <textarea name="catatan" id="catatan" rows="3" placeholder="Misal: Tolong diracik menjadi 10 kapsul..."
+                        class="w-full px-4 py-3 border-gray-200 border rounded-xl bg-gray-50/50 focus:bg-white focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all text-sm font-medium text-gray-700 placeholder-gray-400"></textarea>
+                </div>
+                
+                <div class="flex gap-3 pt-2">
+                    <button type="button" onclick="closeResepModal()" class="flex-1 py-3 bg-gray-50 hover:bg-gray-100 text-gray-600 hover:text-gray-800 font-bold rounded-xl transition-colors text-sm border border-gray-100">
+                        Batal
+                    </button>
+                    <button type="submit" class="flex-1 py-3 bg-blue-600 hover:bg-blue-700 text-white font-bold rounded-xl transition-colors shadow-sm text-sm flex items-center justify-center gap-2">
+                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-8l-4-4m0 0L8 8m4-4v12"></path></svg>
+                        Kirim Resep
+                    </button>
+                </div>
+            </form>
         </div>
     </div>
 
     <script>
+        // --- Logic Modal Keranjang ---
         function openCartModal(id, namaObat) {
             const modal = document.getElementById('addToCartModal');
             const backdrop = modal.querySelector('.modal-backdrop');
             const content = modal.querySelector('.modal-content');
 
-            // Set data dinamis ke dalam Modal
             document.getElementById('modalMedicineId').value = id;
             document.getElementById('modalMedicineName').innerText = namaObat;
 
-            // Tampilkan Modal dengan animasi
             modal.classList.remove('hidden');
             setTimeout(() => {
                 backdrop.classList.remove('opacity-0');
@@ -148,15 +221,39 @@
             const backdrop = modal.querySelector('.modal-backdrop');
             const content = modal.querySelector('.modal-content');
 
-            // Tutup Modal dengan animasi
             backdrop.classList.add('opacity-0');
             content.classList.add('opacity-0', 'scale-95');
             
             setTimeout(() => {
                 modal.classList.add('hidden');
-                // Bersihkan data setelah modal tertutup
                 document.getElementById('modalMedicineId').value = '';
                 document.getElementById('modalMedicineName').innerText = '';
+            }, 300);
+        }
+
+        // --- Logic Modal Upload Resep ---
+        function openResepModal() {
+            const modal = document.getElementById('uploadResepModal');
+            const backdrop = modal.querySelector('.modal-backdrop');
+            const content = modal.querySelector('.modal-content');
+
+            modal.classList.remove('hidden');
+            setTimeout(() => {
+                backdrop.classList.remove('opacity-0');
+                content.classList.remove('opacity-0', 'scale-95');
+            }, 10);
+        }
+
+        function closeResepModal() {
+            const modal = document.getElementById('uploadResepModal');
+            const backdrop = modal.querySelector('.modal-backdrop');
+            const content = modal.querySelector('.modal-content');
+
+            backdrop.classList.add('opacity-0');
+            content.classList.add('opacity-0', 'scale-95');
+            
+            setTimeout(() => {
+                modal.classList.add('hidden');
             }, 300);
         }
     </script>
